@@ -14,15 +14,20 @@
 
 #include <linux/module.h>  /* Needed by all modules */
 #include <linux/kernel.h>  /* Needed for KERN_ALERT */
-
+#include "hr_timer_wrapper.h"
 extern int ada_init_module(void);
 extern void ada_cleanup_module(void);
 
 int init_module(void)
 {
+  int result;
   printk("C Module wrapper init\n");
   // A non 0 return means init_module failed; module can't be loaded.
-  return ada_init_module();
+  result = hr_init();
+  if (result == 0) {
+    result = ada_init_module();
+  }
+  return result;
 }
 
 

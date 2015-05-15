@@ -2,7 +2,8 @@ obj-m += wrapper.o
 
 ADA_SOURCES = src/hello_ada.ada 
 
-C_SOURCES = src/wrapper.c
+C_SOURCES = src/wrapper.c \
+	src/hr_timer_wrapper.c
 ADAC=gnatmake
 ADA_FLAGS=-a -s -mcmodel=kernel
 wrapper-objs := $(wrapper-objs) $(subst .ada,.o,$(ADA_SOURCES)) $(subst .c,.o,$(C_SOURCES))
