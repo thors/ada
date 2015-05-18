@@ -17,14 +17,6 @@
 #include "hr_timer_wrapper.h"
 #include "ada_interface.h"
 
-int init_module(void)
-{
-  int result;
-  printk("C Module wrapper init\n");
-  // A non 0 return means init_module failed; module can't be loaded.
-  result = ada_init_module();
-  return result;
-}
 
 void __gnat_last_chance_handler (char *source_location,
                                  int line) {
@@ -32,11 +24,6 @@ void __gnat_last_chance_handler (char *source_location,
   printk(source_location);
 }
 
-void cleanup_module(void)
-{
-  printk(KERN_ALERT "C Module wrapper cleanup\n");
-  ada_cleanup_module();
-}  
 
 MODULE_LICENSE("GPL");
 
