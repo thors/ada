@@ -26,6 +26,11 @@ int init_module(void)
   return result;
 }
 
+void __gnat_last_chance_handler (char *source_location,
+                                 int line) {
+  printk("Ada __gnat_last_chance_handler:");
+  printk(source_location);
+}
 
 void cleanup_module(void)
 {
