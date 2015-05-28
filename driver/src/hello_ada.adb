@@ -14,10 +14,20 @@ package body Hello_Ada is
    pragma import( C, hr_init, "hr_init" );
    procedure Hr_Cleanup;
    pragma import( C, hr_cleanup, "hr_cleanup" );
-   procedure Printk( s : String );
-   pragma import( C, printk, "printk" );
    procedure Hr_Start_Timer(T : Interfaces.C.long);
    pragma import( C, hr_start_timer, "hr_start_timer" );
+   
+   procedure Printk( s : String );
+   pragma import( C, printk, "printk" );
+ --  procedure create_proc_read_entry(  );
+ --  pragma import( C, create_proc_read_entry, "ada_create_proc_read_entry" );
+   procedure create_proc_folder( S: String  );
+   pragma import( C, create_proc_folder, "ada_create_folder" );
+   procedure proc_Init;
+   pragma import( C, proc_Init, "ada_proc_init" );
+   procedure Proc_Cleanup;
+   pragma import( C, Proc_Cleanup, "ada_proc_cleanup" );
+   
    IntStringBuffer : String := "                      t"  & Character'Val(10) & Character'Val(0);
    procedure TestBusyWait(C: Integer);
    --   function UInt2String(I : Integer) return String;
@@ -28,6 +38,8 @@ package body Hello_Ada is
    begin
       Printk("Hello, Ada-World!" & Character'Val(0));
       Result := Hr_Init;
+      Proc_Init;
+      Create_Proc_Folder("bus/onewire" & Character'Val(0));
       Counter := 10;
       Jiffies_Start := Jiffies;
       Hr_Start_Timer(1000000000);
@@ -39,6 +51,7 @@ package body Hello_Ada is
    begin
       Printk("Goodbye, Ada-World!" & Character'Val(0));
       Hr_Cleanup;
+      Proc_Cleanup;
    end Cleanup_Module;
    
    procedure UInt2String(J : Integer) is
